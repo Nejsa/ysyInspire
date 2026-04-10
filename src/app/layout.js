@@ -17,6 +17,7 @@ export const metadata = {
 };
 
 import Navbar from "@/components/Navbar";
+import AuthProvider from "@/components/SessionProvider";
 
 export default function RootLayout({ children }) {
   return (
@@ -25,8 +26,10 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
