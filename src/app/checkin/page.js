@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import CalendarGrid from "@/components/CalendarGrid";
 
 export default function CheckIn() {
   const { data: session } = useSession();
@@ -36,6 +37,8 @@ export default function CheckIn() {
       ) : (
         <button onClick={handleCheckin}>Sjekk inn i dag</button>
       )}
+
+      <CalendarGrid />
     </main>
   );
 }

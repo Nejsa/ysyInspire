@@ -37,3 +37,27 @@ export async function POST(request) {
     return Response.json({ error: error.message }, { status: 500 });
   }
 }
+export async function GET(request) {
+  try {
+    const session = await getServerSession();
+
+    if (!session) {
+      return Response.json({ error: "Not logged in" }, { status: 401 });
+    }
+
+    const client = await clientPromise;
+    const db = client.db("ysyinspire");
+    const collection = db.collection("checkins");
+
+    const checkins = await collection
+      .find({ email: session.user.email })
+      .toArray();
+
+    const dates = checkins.map((c) => c.date.toISOString().split("T")[0]);
+
+    return Response.json({ dates }, { status: 200 });
+  } catch (error) {
+    console.error("Get checkins error:", error);
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+}
